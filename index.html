@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Auxilio DreamXiter</title>
+  <style>
+    /* Reset e base */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to bottom, #b30000, #ffffff);
+      color: #333;
+      overflow-x: hidden;
+      position: relative;
+      min-height: 100vh;
+    }
+
+    /* Flocos de neve */
+    .snowflake {
+      position: fixed;
+      top: -10px;
+      color: white;
+      font-size: 1em;
+      user-select: none;
+      pointer-events: none;
+      animation-name: fall;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+      z-index: 0;
+      opacity: 0.9;
+    }
+    @keyframes fall {
+      0% {transform: translateY(0);}
+      100% {transform: translateY(100vh);}
+    }
+
+    header {
+      text-align: center;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.8);
+      border-bottom: 2px solid #b30000;
+      position: relative;
+      z-index: 10;
+    }
+    header h1 {
+      color: #b30000;
+      font-size: 2em;
+      margin: 0;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 25px 30px;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      position: relative;
+      z-index: 10;
+    }
+
+    h2 {
+      color: #b30000;
+      margin-top: 0;
+      margin-bottom: 20px;
+      user-select: none;
+    }
+
+    label {
+      font-weight: 600;
+    }
+
+    input[type="text"], select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 6px;
+      margin-bottom: 15px;
+      border: 2px solid #b30000;
+      border-radius: 4px;
+      font-size: 1em;
+      box-sizing: border-box;
+      transition: border-color 0.3s;
+    }
+    input[type="text"]:focus, select:focus {
+      border-color: #800000;
+      outline: none;
+    }
+
+    button.btn {
+      display: inline-block;
+      margin: 10px 5px 0 0;
+      padding: 10px 25px;
+      border-radius: 10px;
+      background: #b30000;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.15s;
+      user-select: none;
+    }
+    button.btn:hover {
+      background: #800000;
+      transform: scale(1.05);
+    }
+    button.btn:active {
+      transform: scale(0.95);
+    }
+
+    /* Tabela sensibilidade */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+      user-select: none;
+    }
+    table, th, td {
+      border: 1px solid #b30000;
+    }
+    th, td {
+      padding: 10px;
+      text-align: center;
+      font-weight: 600;
+    }
+    th {
+      background: #b30000;
+      color: white;
+    }
+
+    /* Radios quadrados para auxílio */
+    .auxilio-options {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 25px;
+      user-select: none;
+    }
+    .auxilio-options label {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      font-weight: 700;
+      color: #b30000;
+      padding: 8px 14px;
+      border: 2px solid #b30000;
+      border-radius: 6px;
+      transition: background 0.3s, color 0.3s;
+      user-select: none;
+    }
+    .auxilio-options input[type="radio"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #b30000;
+      border-radius: 3px; /* quadrado */
+      margin-right: 8px;
+      position: relative;
+      cursor: pointer;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .auxilio-options input[type="radio"]:checked {
+      background: #b30000;
+      border-color: #800000;
+    }
+    .auxilio-options input[type="radio"]:checked + span {
+      color: white;
+    }
+    .auxilio-options label:hover {
+      background: #f2dede;
+    }
+
+    /* Range slider FOV */
+    .slider-container {
+      margin-bottom: 20px;
+      user-select: none;
+    }
+    .slider-container label {
+      font-weight: 700;
+      display: block;
+      margin-bottom: 8px;
+      color: #b30000;
+    }
+    input[type="range"] {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 8px;
+      border-radius: 5px;
+      background: #b30000;
+      outline: none;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: white;
+      cursor: pointer;
+      border: 2px solid #800000;
+      transition: background 0.3s, transform 0.15s;
+      margin-top: -7px;
+    }
+    input[type="range"]:hover::-webkit-slider-thumb {
+      background: #f0f0f0;
+      transform: scale(1.2);
+    }
+    input[type="range"]:active::-webkit-slider-thumb {
+      transform: scale(1.1);
+    }
+    input[type="range"]::-moz-range-thumb {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: white;
+      cursor: pointer;
+      border: 2px solid #800000;
+      transition: background 0.3s, transform 0.15s;
+    }
+
+    /* Checkbox estilo quadrado */
+    .checkbox-group {
+      margin-bottom: 15px;
+      user-select: none;
+    }
+    .checkbox-group label {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      font-weight: 600;
+      color: #b30000;
+      gap: 8px;
+    }
+    .checkbox-group input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #b30000;
+      border-radius: 3px;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      position: relative;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .checkbox-group input[type="checkbox"]:checked {
+      background: #b30000;
+      border-color: #800000;
+    }
+
+    /* Discord icon fixado */
+    .discord-icon {
+      position: fixed;
+      bottom: 15px;
+      right: 15px;
+      width: 50px;
+      height: 50px;
+      background: #7289da;
+      border-radius: 50%;
+      box-shadow:
+        0 0 15px 5px rgba(114,137,218,0.7),
+        inset 0 0 10px rgba(255,255,255,0.4);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: box-shadow 0.3s, transform 0.3s;
+      z-index: 20;
+    }
+    .discord-icon img {
+      width: 28px;
+      height: 28px;
+      filter: drop-shadow(0 0 1px rgba(0,0,0,0.3));
+      user-select: none;
+      pointer-events: none;
+    }
+    .discord-icon:hover {
+      box-shadow:
+        0 0 25px 10px rgba(114,137,218,0.9),
+        inset 0 0 15px rgba(255,255,255,0.7);
+      transform: scale(1.1);
+    }
+
+    /* Resultado e info */
+    #resultado, #infoPanel {
+      margin-top: 20px;
+      font-weight: 600;
+      font-size: 1.1em;
+      user-select: none;
+    }
+    #infoPanel {
+      display: none;
+      padding: 15px;
+      background: #f9f9f9;
+      border: 2px solid #b30000;
+      border-radius: 10px;
+      color: #b30000;
+      max-width: 780px;
+      margin: 30px auto 50px;
+      text-align: center;
+      user-select: text;
+      box-shadow: 0 0 12px rgba(179,0,0,0.4);
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Scroll behavior smooth */
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Auxilio DreamXiter</h1>
+</header>
+
+<div class="container" id="sensibilidadePanel">
+  <h2>Pesquisar Sensibilidade</h2>
+  <label for="nomeCelular">Nome do Celular:</label>
+  <input type="text" id="nomeCelular" placeholder="Ex: iPhone 11, Galaxy S21" />
+
+  <label for="marca">Marca:</label>
+  <select id="marca">
+    <option value="">Selecione</option>
+    <option value="android">Android</option>
+    <option value="iphone">iPhone</option>
+  </select>
+
+  <label for="nivel">Qual sensibilidade?</label>
+  <select id="nivel">
+    <option value="">Selecione</option>
+    <option value="baixa">Baixa</option>
+    <option value="media">Média</option>
+    <option value="alta">Alta</option>
+  </select>
+
+  <button class="btn" onclick="gerarSensibilidade()">Pesquisar</button>
+
+  <div id="resultado"></div>
+</div>
+
+<div class="container" id="auxilioPanel">
+  <h2>Auxílio</h2>
+
+  <div class="auxilio-options" role="radiogroup" aria-label="Opções de Auxílio">
+    <label><input type="radio" name="auxilio" value="rage"> <span>Auxilio Rage</span></label>
+    <label><input type="radio" name="auxilio" value="med"> <span>Auxilio Méd</span></label>
+    <label><input type="radio" name="auxilio" value="basic"> <span>Auxilio Basic</span></label>
+  </div>
+
+  <div class="slider-container">
+    <label for="fovRange">FOV: <span id="fovValue">0</span></label>
+    <input type="range" id="fovRange" min="0" max="100" value="0" />
+  </div>
+
+  <div class="checkbox-group">
+    <label><input type="checkbox" id="atirarCheck"> Ao Atirar</label><br>
+    <label><input type="checkbox" id="olharCheck"> Ao Olhar</label>
+  </div>
+
+  <button class="btn" onclick="injetarAuxilio()">Injetar Auxílio</button>
+
+  <div id="injetarStatus" style="margin-top:15px; font-weight:600;"></div>
+</div>
+
+<div class="container" id="infoPanel">
+  <h2>Informações</h2>
+  <p><strong>Desenvolvedor:</strong> DreamXiter</p>
+  <p><strong>Painel:</strong> AuxilioFreeFire</p>
+  <p><strong>Proteção:</strong> Safe</p>
+</div>
+
+<div class="container" style="text-align:center;">
+  <button class="btn" onclick="scrollToInfo()">Info</button>
+</div>
+
+<!-- Ícone do Discord -->
+<a href="https://discord.gg/Zbbda5e4KD" target="_blank" rel="noopener noreferrer" class="discord-icon" title="Acesse nosso Discord">
+  <img src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png" alt="Discord" />
+</a>
+
+<script>
+  // Flocos de neve em 60fps, simples e leve
+  function createSnowflake() {
+    const snowflake = document.createElement('div');
+    snowflake.classList.add('snowflake');
+    snowflake.textContent = '❄';
+    snowflake.style.left = Math.random() * window.innerWidth + 'px';
+    snowflake.style.fontSize = (Math.random() * 10 + 10) + 'px';
+    snowflake.style.animationDuration = (Math.random() * 3 + 3) + 's'; // 3-6s
+    document.body.appendChild(snowflake);
+    setTimeout(() => snowflake.remove(), 6000);
+  }
+  setInterval(createSnowflake, 16); // ~60 fps
+
+  // Atualizar valor FOV slider
+  const fovRange = document.getElementById('fovRange');
+  const fovValue = document.getElementById('fovValue');
+  fovRange.addEventListener('input', () => {
+    fovValue.textContent = fovRange.value;
+  });
+
+  // Seleção exclusiva em auxilio (já garantido por radio inputs)
+
+  // Função gerar sensibilidade
+  function gerarSensibilidade() {
+    const nome = document.getElementById("nomeCelular").value.toLowerCase().trim();
+    const marca = document.getElementById("marca").value;
+    const nivel = document.getElementById("nivel").value;
+    const resultado = document.getElementById("resultado");
+
+    resultado.innerHTML = '';
+
+    if (!nome) {
+      resultado.innerHTML = `<p style="color:#ff4444; font-weight:700;">Por favor, insira o nome do celular.</p>`;
+      return;
+    }
+    if (!marca) {
+      resultado.innerHTML = `<p style="color:#ff4444; font-weight:700;">Por favor, selecione a marca do celular.</p>`;
+      return;
+    }
+    if (!nivel) {
+      resultado.innerHTML = `<p style="color:#ff4444; font-weight:700;">Por favor, selecione a sensibilidade.</p>`;
+      return;
+    }
+
+    // Validação marca x nome
+    if ((marca === "iphone" && !nome.includes("iphone")) ||
+      (marca === "android" && nome.includes("iphone"))) {
+      resultado.innerHTML = `<p style="color:#ff4444; font-weight:700;">Celular não encontrado para a marca selecionada.</p>`;
+      return;
+    }
+
+    // Sensibilidade base para gerar valores
+    let base;
+    if (nivel === "baixa") base = [10, 20, 30];
+    else if (nivel === "media") base = [40, 50, 60];
+    else if (nivel === "alta") base = [70, 80, 90];
+
+    const geral = base[Math.floor(Math.random() * base.length)];
+    const redDot = geral + Math.floor(Math.random() * 5);
+    const mira2x = geral + Math.floor(Math.random() * 5);
+    const mira4x = geral + Math.floor(Math.random() * 5);
+    const miraAWM = geral + Math.floor(Math.random() * 5);
+
+    // Gerar DPI aleatória para Android (valores diferentes por geração)
+    let dpiText = '';
+    if (marca === 'android') {
+      let dpiValue;
+      if (nivel === 'baixa') dpiValue = Math.floor(Math.random() * (300 - 150 + 1)) + 150;
+      else if (nivel === 'media') dpiValue = Math.floor(Math.random() * (600 - 350 + 1)) + 350;
+      else if (nivel === 'alta') dpiValue = Math.floor(Math.random() * (900 - 650 + 1)) + 650;
+      dpiText = `<p style="margin-top: 15px; font-weight:700; color:#00ccff;">DPI sugerida: ${dpiValue} DPI</p>`;
+    }
+
+    resultado.innerHTML = `
+      <table>
+        <thead>
+          <tr><th>Geral</th><th>Red Dot</th><th>Mira 2x</th><th>Mira 4x</th><th>Mira AWM</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>${geral}</td>
+            <td>${redDot}</td>
+            <td>${mira2x}</td>
+            <td>${mira4x}</td>
+            <td>${miraAWM}</td>
+          </tr>
+        </tbody>
+      </table>
+      ${dpiText}
+    `;
+  }
+
+  // Scroll para info
+  function scrollToInfo() {
+    const info = document.getElementById("infoPanel");
+    info.style.display = "block";
+    info.scrollIntoView({ behavior: "smooth" });
+  }
+
+  // Função simulação Injetar Auxílio e detectar Free Fire
+  function injetarAuxilio() {
+    const auxilioRadios = document.getElementsByName("auxilio");
+    let selecionado = null;
+    for (const r of auxilioRadios) {
+      if (r.checked) {
+        selecionado = r.value;
+        break;
+      }
+    }
+
+    if (!selecionado) {
+      alert("Por favor, selecione um tipo de auxílio.");
+      return;
+    }
+
+    const fov = document.getElementById("fovRange").value;
+    const aoAtirar = document.getElementById("atirarCheck").checked;
+    const aoOlhar = document.getElementById("olharCheck").checked;
+
+    const status = document.getElementById("injetarStatus");
+
+    // Simulação detecção de Free Fire instalado (não é possível fazer realmente via JS web)
+    // Vamos usar prompt para escolher versão instalada para simular
+    let ffVersao = prompt("Qual versão do Free Fire você tem instalada? (normal, max ou nenhuma)").toLowerCase().trim();
+
+    if (ffVersao !== "normal" && ffVersao !== "max") {
+      status.style.color = "#ff4444";
+      status.textContent = "Free Fire não encontrado no dispositivo.";
+      return;
+    }
+
+    status.style.color = "#008800";
+    status.innerHTML = `
+      Auxílio <strong>${selecionado.toUpperCase()}</strong> injetado com sucesso!<br/>
+      FOV: ${fov} <br/>
+      Ao Atirar: ${aoAtirar ? "Sim" : "Não"} <br/>
+      Ao Olhar: ${aoOlhar ? "Sim" : "Não"} <br/>
+      Método de injeção para <strong>Free Fire ${ffVersao === "max" ? "Max" : "Normal"}</strong> ativado.
+    `;
+  }
+</script>
+</body>
+</html>
